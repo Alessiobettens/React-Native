@@ -140,8 +140,6 @@ const HomeScreen = ({ navigation }) => {
           })
         }
       />
-      <ProductCard />
-      <ProductCard />
     </ScrollView>
   );
 };
