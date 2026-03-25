@@ -1,34 +1,22 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, ScrollView } from "react-native";
-import ProductCard from "./components/ProductCard.js";
+import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import HomeScreen from "../screens/HomeScreen";
+import HomeScreen from "./screens/HomeScreen";
 import ProductDetail from "./screens/ProductDetail";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <ScrollView style={styles.container}>
-      {/* View als container */}
-      <View style={styles.box}>
-        <Text style={styles.title}>Core Components Demo</Text>
-      </View>
-
-      {/* Text */}
-      <Text style={styles.text}>
-        Dit is een voorbeeld van een Text component.
-      </Text>
-
-      {/* Image */}
-      <Image
-        style={styles.image}
-        source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
-      />
-
-      {/* TextInput */}
-      <TextInput style={styles.input} placeholder="Typ hier iets..." />
-    </ScrollView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={ProductDetail} />
+      </Stack.Navigator>
+      <StatusBar style="auto" />
+    </NavigationContainer>
   );
 }
 

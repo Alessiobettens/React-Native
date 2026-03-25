@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,10 +7,10 @@ import {
   TextInput,
   Button,
   Switch,
+  StatusBar,
 } from "react-native";
-import ProductCard from "./components/ProductCard";
-import BlogCard from "./components/BlogCard";
-import { Picker } form "@react-native-picker/picker";  // in Terminal: npm install @react-native-picker/picker 
+import ProductCard from "../components/ProductCard";
+import { Picker } from "@react-native-picker/picker"; // in Terminal: npm install @react-native-picker/picker
 
 const categoryNames = {
   "": "Alle categorieen",
@@ -23,7 +23,6 @@ const categoryNames = {
   "69a84e73fb5b9fc1d646b3c7": "Esports&Community",
   "69a84e58acb12d9bb13c12c0": "Gaming News",
 };
-
 
 const HomeScreen = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -52,7 +51,8 @@ const HomeScreen = ({ navigation }) => {
             price: (item.skus[0]?.fieldData.price.value || 0) / 100,
             image: { uri: item.skus[0]?.fieldData["main-image"]?.url },
             category:
-            categoryNames[item.product.fieldData.category] || "Onbekende categorie"
+              categoryNames[item.product.fieldData.category] ||
+              "Onbekende categorie",
           })),
         );
       })
@@ -61,8 +61,8 @@ const HomeScreen = ({ navigation }) => {
 
   const filteredProducts = products.filter(
     (p) =>
-    (selectedCategory === "" || p.category === categoryNames[selectedCategory]) &&
-    p.title.toLowerCase().includes(searchQuery.toLowerCase()),
+      (selectedCategory === "" || p.category === selectedCategory) &&
+      p.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
@@ -73,17 +73,15 @@ const HomeScreen = ({ navigation }) => {
     return 0;
   });
 
-
-
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Alessio Bettens</Text>
       <TextInput
         style={styles.searchInput}
         placeholder="Search products..."
-        value={searchQuery}onChangeText={setSearchQuery}
+        value={searchQuery}
+        onChangeText={setSearchQuery}
       />
-
 
       <StatusBar style="auto" />
 
@@ -92,15 +90,18 @@ const HomeScreen = ({ navigation }) => {
         onValueChange={setSelectedCategory}
         style={styles.picker}
       >
-        <Picker.item label="Alle categorieen" value="" />
-        <Picker.item label="Overige hardare" value="Overige hardare" />
-        <Picker.item label="Setup creation" value="Setup creation" />
-        <Picker.item label="Computer accessoires" value="Computer accessoires" />
-        <Picker.item label="Gaming accessoires" value="Gaming accessoires" />
-        <Picker.item label="Audio-appartuur" value="Audio-appartuur" />
-        <Picker.item label="Game Design" value="Game Design" />
-        <Picker.item label="Esports&Community" value="Esports&Community" />
-        <Picker.item label="Gaming News" value="Gaming News" />
+        <Picker.Item label="Alle categorieen" value="" />
+        <Picker.Item label="Overige hardare" value="Overige hardare" />
+        <Picker.Item label="Setup creation" value="Setup creation" />
+        <Picker.Item
+          label="Computer accessoires"
+          value="Computer accessoires"
+        />
+        <Picker.Item label="Gaming accessoires" value="Gaming accessoires" />
+        <Picker.Item label="Audio-appartuur" value="Audio-appartuur" />
+        <Picker.Item label="Game Design" value="Game Design" />
+        <Picker.Item label="Esports&Community" value="Esports&Community" />
+        <Picker.Item label="Gaming News" value="Gaming News" />
       </Picker>
 
       <Picker
@@ -108,12 +109,11 @@ const HomeScreen = ({ navigation }) => {
         onValueChange={setSortOption}
         style={styles.picker}
       >
-        <Picker.item label="Prijs oplopend" value="price-asc" />
-        <Picker.item label="Prijs aflopend" value="price-desc" />
-        <Picker.item label="Naam: A-Z" value="name-asc" />
-        <Picker.item label="Naam: Z-A" value="name-desc" />
+        <Picker.Item label="Prijs oplopend" value="price-asc" />
+        <Picker.Item label="Prijs aflopend" value="price-desc" />
+        <Picker.Item label="Naam: A-Z" value="name-asc" />
+        <Picker.Item label="Naam: Z-A" value="name-desc" />
       </Picker>
-
 
       {filteredProducts.map((product) => (
         <ProductCard
@@ -130,13 +130,13 @@ const HomeScreen = ({ navigation }) => {
         title="Honda Civic"
         description="De krachtige honda"
         price="2000"
-        image={require("../assets/honda.jpg")}
+        image={require("../assets/images/honda.jpg")}
         onPress={() =>
-          NavigationActivation.navigate("Details", {
+          navigation.navigate("Details", {
             title: "Honda Civic",
             description: "De krachtige Honda",
             price: "2000",
-            image: require("../assets/honda.jpg"),
+            image: require("../assets/images/honda.jpg"),
           })
         }
       />
